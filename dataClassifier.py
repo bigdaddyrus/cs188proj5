@@ -71,21 +71,63 @@ def enhancedFeatureExtractorDigit(datum):
     """
     Your feature extraction playground.
 
-    You should return a util.Counter() of features
-    for this datum (datum is of type samples.Datum).
+    datum is of type samples.Datum.
 
     ## DESCRIBE YOUR ENHANCED FEATURES HERE...
 
     ##
     """
-    features =  basicFeatureExtractorDigit(datum)
+    features = basicFeatureExtractorDigit(datum)
 
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
-
+    # features2 = darkRatio(datum)
+    # features = np.append(features, features2)
+    features3 = connectedBackground(datum)
+    features = np.append(features, features3)
+    # print features2
     return features
 
+def darkRatio(datum):
+    # features = util.Counter()
+    features = np.zeros(100, int)
+    dark = 0.0
+    for x in range(DIGIT_DATUM_WIDTH):
+        for y in range(DIGIT_DATUM_HEIGHT):
+            if datum.getPixel(x, y) > 0:
+                dark += 1
+    all_dots = DIGIT_DATUM_HEIGHT * DIGIT_DATUM_WIDTH
+    ratio = dark/all_dots
+    scaled = int(round(ratio * 100))
+    for i in xrange(scaled):
+        features[i] = 1
+    return features
 
+def connectedBackground(datum):
+    col_features = np.zeros(DIGIT_DATUM_WIDTH, int)
+    # row_features = np.zeros(DIGIT_DATUM_HEIGHT, int)
+    # row = 0
+    col = 0
+    for x in range(DIGIT_DATUM_WIDTH):
+        for y in range(DIGIT_DATUM_HEIGHT):
+            if datum.getPixel(x, y) > 0:
+                break
+            if y == DIGIT_DATUM_HEIGHT - 1:
+                col_features[x] = 1
+    #
+    # for i in range(DIGIT_DATUM_HEIGHT):
+    #     for j in range(DIGIT_DATUM_WIDTH):
+    #         if datum.getPixel(j, i) > 0:
+    #             break
+    #         if j == DIGIT_DATUM_WIDTH - 1:
+    #             row += 1
+
+    # for r in xrange(row):
+    #     row_features[r] = 1
+    # for c in xrange(col):
+    #     col_features[c] = 1
+    # return np.append(row_features, col_features)
+    return col_features
+# def boundingBox(datum):
 
 def basicFeatureExtractorPacman(state):
     """
