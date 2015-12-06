@@ -612,7 +612,9 @@ class UnitTest(testClasses.TestCase):
             grades.addMessage('FAIL: %s' % self.path)
             grades.addMessage('\t%s' % self.failure)
             grades.addMessage('\tstudent result: "%s"' % result)
-            grades.addMessage('\tcorrect result: "%s"' % solutionDict['result'])
+            grades.addMessage('\tcorrect result: "%s"' % solutionDict['resul'
+                                                                      ''
+                                                                      't'])
         if self.partialPoints > 0:
             print "                    (%i of %i points)" % (0, self.partialPoints)
         return False
